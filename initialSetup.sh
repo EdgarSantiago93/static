@@ -57,7 +57,7 @@ else
     sudo echo "$UART" | tee -a /boot/config.txt
 fi
 
-echo "\n"
+echo ""
 echo "👾 -> Updating cmdline.txt <- 👾 "
 
 MODULESCHECK=$(sed -e '/modules-load=dwc2,g_ether/!d' /boot/cmdline.txt)
@@ -79,19 +79,19 @@ else
 fi
 
 
-echo "\n"
+echo ""
 
 echo "👾 -> Update <- 👾"
 echo "✅ -> Updating and upgrading packages"
 sudo apt update && sudo apt upgrade
-echo "\n"
+echo ""
 
 
 echo "👾 -> Packages <- 👾"
 echo "✅ -> Installing mosquitto client"
 sudo apt install -y mosquitto mosquitto-clients
 
-echo "\n"
+echo ""
 echo "✅ -> Enabling mosquitto service"
 sudo systemctl enable mosquitto.service
 
@@ -119,19 +119,23 @@ else
 fi
 fi
 
-echo "\n"
+echo ""
 echo "🔃 -> Restarting mosquitto service"
 sudo systemctl restart mosquitto.service
 
 MOSQUITTOSTATUSAFTER=$(systemctl status mosquitto.service | grep Active: | awk '{print $2$3}')
 
 if [ $MOSQUITTOSTATUS = 'active(running)' ]; then
-  echo "\n"
+  echo ""
   echo "✅ -> Mosquitto service is up and running"
-  echo "\n"
+  echo ""
 fi
 # check status
 
+echo "👾 -> Config folder <- 👾"
+echo "✅ -> Created config folder @ /home/pi/config"
+mkdir -p /home/pi/config
+echo ""
 
 echo "👾 -> Creating startup scripts <- 👾"
 
@@ -161,7 +165,7 @@ BASH
 sudo chmod +x /home/pi/startScripts/mosquittoServiceStatusCheck.sh
 
 echo "✅ -> Mosquitto service status check script created @ /home/pi/startScripts/mosquittoServiceStatusCheck.sh"
-echo "\n"
+echo ""
 
 # Create the initial pi start script
 sudo tee /home/pi/startScripts/reinitApp.sh <<'BASH'
