@@ -193,24 +193,8 @@ whoami
 sudo -i -u root bash << EOF
 > /etc/rc.local
 echo '#!/bin/sh -e' | tee -a /etc/rc.local
-echo '# | tee -a /etc/rc.local
+echo '#' | tee -a /etc/rc.local
 echo '# rc.local' | tee -a /etc/rc.local
-echo '#' | tee -a /etc/rc.local
-echo '# This script is executed at the end of each multiuser runlevel.' | tee -a /etc/rc.local
-echo '# Make sure that the script will "exit 0" on success or any other' | tee -a /etc/rc.local
-echo '# value on error.' | tee -a /etc/rc.local
-echo '#' | tee -a /etc/rc.local
-echo '# In order to enable or disable this script just change the execution' | tee -a /etc/rc.local
-echo '# bits.' | tee -a /etc/rc.local
-echo '#' | tee -a /etc/rc.local
-echo '# By default this script does nothing.' | tee -a /etc/rc.local
-echo '' | tee -a /etc/rc.local
-echo '# Print the IP address' | tee -a /etc/rc.local
-echo '_IP=$(hostname -I) || true' | tee -a /etc/rc.local
-echo 'if [ "$_IP" ]; then' | tee -a /etc/rc.local
-echo '  printf "My IP address is %s\n" "$_IP"' | tee -a /etc/rc.local
-echo 'fi' | tee -a /etc/rc.local
-echo '' | tee -a /etc/rc.local
 echo 'sudo systemctl start ssh' | tee -a /etc/rc.local
 echo 'sudo bash /home/pi/startScripts/mosquittoServiceStatusCheck.sh' | tee -a /etc/rc.local
 echo 'sudo bash /home/pi/startScripts/reinitApp.sh' | tee -a /etc/rc.local
