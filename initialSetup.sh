@@ -193,7 +193,7 @@ whoami
 sudo -i -u root bash << EOF
 > /etc/rc.local
 echo '#!/bin/sh -e' | tee -a /etc/rc.local
-echo '#' | tee -a /etc/rc.local
+echo '# | tee -a /etc/rc.local
 echo '# rc.local' | tee -a /etc/rc.local
 echo '#' | tee -a /etc/rc.local
 echo '# This script is executed at the end of each multiuser runlevel.' | tee -a /etc/rc.local
@@ -211,11 +211,10 @@ echo 'if [ "$_IP" ]; then' | tee -a /etc/rc.local
 echo '  printf "My IP address is %s\n" "$_IP"' | tee -a /etc/rc.local
 echo 'fi' | tee -a /etc/rc.local
 echo '' | tee -a /etc/rc.local
-echo "sudo bash /home/pi/startScripts/mosquittoServiceStatusCheck.sh" | tee -a /etc/rc.local
-echo "sudo bash /home/pi/startScripts/reinitApp.sh" | tee -a /etc/rc.local
-echo "sudo systemctl start ssh" | tee -a /etc/rc.local
+echo 'sudo systemctl start ssh' | tee -a /etc/rc.local
+echo 'sudo bash /home/pi/startScripts/mosquittoServiceStatusCheck.sh' | tee -a /etc/rc.local
+echo 'sudo bash /home/pi/startScripts/reinitApp.sh' | tee -a /etc/rc.local
 echo 'exit 0' | tee -a /etc/rc.local
-sudo chmod +x /etc/rc.local
 EOF
 echo "✅ -> Rc.local file rewritten"
 sudo chmod +x /etc/rc.local
