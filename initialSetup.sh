@@ -42,12 +42,14 @@ echo "👾 -> Updating config.txt <- 👾 "
 DTCHECK=$(awk '/dtoverlay=dwc2/' /boot/config.txt)
 UARTCHECK=$(awk '/enable_uart=1/' /boot/config.txt)
 
+REBOOTCHECK=false
 
 if [ "$DTCHECK" = "$DTOVERLAY" ]; then
     echo "⏭️ -> Dtoverlay already exists in config.txt, skipping"
 else
     echo "✅ -> Adding dtoverlay setting to config.txt"
     sudo echo "$DTOVERLAY" | tee -a /boot/config.txt
+    REBOOTCHECK=true
 fi
 
 if [ "$UARTCHECK" = "$UART" ]; then
@@ -55,6 +57,7 @@ if [ "$UARTCHECK" = "$UART" ]; then
 else
     echo "✅ -> Adding uart setting to config.txt"
     sudo echo "$UART" | tee -a /boot/config.txt
+    REBOOTCHECK=true
 fi
 
 echo ""
@@ -66,6 +69,7 @@ IPV6CHECK=$(awk '/ipv6.disable=1/' /boot/cmdline.txt)
 if [ "$MODULESCHECK" = "" ]; then
     echo "✅ -> Adding module-load to cmdline.txt"
     sudo echo "$MODULESLOAD" | tee -a /boot/cmdline.txt
+    REBOOTCHECK=true
 else
     echo "⏭️ -> Module-load setting already exists in cmdline.txt, skipping"    
 fi
@@ -74,9 +78,23 @@ fi
 if [ "$IPV6CHECK" = "" ]; then
     echo "✅ -> Adding disable-ipv6 to cmdline.txt"
     sudo echo "$IPV6DISABLE" | tee -a /boot/cmdline.txt
+    REBOOTCHECK=true
 else
     echo "⏭️ -> Disable ipv6 setting already exists in cmdline.txt, skipping"    
 fi
+
+
+if [ "$REBOOTCHECK" = true ] ; then
+    echo ''
+    echo ''
+    echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
+    echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
+    echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
+    echo ''
+    echo ''
+    sudo reboot now
+fi
+
 
 
 echo ""
