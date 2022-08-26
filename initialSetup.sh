@@ -60,40 +60,40 @@ else
     REBOOTCHECK=true
 fi
 
-echo ""
-echo "👾 -> Updating cmdline.txt <- 👾 "
+# echo ""
+# echo "👾 -> Updating cmdline.txt <- 👾 "
 
-MODULESCHECK=$(sed -e '/modules-load=dwc2,g_ether/!d' /boot/cmdline.txt)
-IPV6CHECK=$(awk '/ipv6.disable=1/' /boot/cmdline.txt)
+# MODULESCHECK=$(sed -e '/modules-load=dwc2,g_ether/!d' /boot/cmdline.txt)
+# IPV6CHECK=$(awk '/ipv6.disable=1/' /boot/cmdline.txt)
 
-if [ "$MODULESCHECK" = "" ]; then
-    echo "✅ -> Adding module-load to cmdline.txt"
-    sudo echo "$MODULESLOAD" | tee -a /boot/cmdline.txt
-    REBOOTCHECK=true
-else
-    echo "⏭️ -> Module-load setting already exists in cmdline.txt, skipping"    
-fi
-
-
-if [ "$IPV6CHECK" = "" ]; then
-    echo "✅ -> Adding disable-ipv6 to cmdline.txt"
-    sudo echo "$IPV6DISABLE" | tee -a /boot/cmdline.txt
-    REBOOTCHECK=true
-else
-    echo "⏭️ -> Disable ipv6 setting already exists in cmdline.txt, skipping"    
-fi
+# if [ "$MODULESCHECK" = "" ]; then
+#     echo "✅ -> Adding module-load to cmdline.txt"
+#     sudo echo "$MODULESLOAD" | tee -a /boot/cmdline.txt
+#     REBOOTCHECK=true
+# else
+#     echo "⏭️ -> Module-load setting already exists in cmdline.txt, skipping"    
+# fi
 
 
-if [ "$REBOOTCHECK" = true ] ; then
-    echo ''
-    echo ''
-    echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
-    echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
-    echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
-    echo ''
-    echo ''
-    sudo reboot now
-fi
+# if [ "$IPV6CHECK" = "" ]; then
+#     echo "✅ -> Adding disable-ipv6 to cmdline.txt"
+#     sudo echo "$IPV6DISABLE" | tee -a /boot/cmdline.txt
+#     REBOOTCHECK=true
+# else
+#     echo "⏭️ -> Disable ipv6 setting already exists in cmdline.txt, skipping"    
+# fi
+
+
+# if [ "$REBOOTCHECK" = true ] ; then
+#     echo ''
+#     echo ''
+#     echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
+#     echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
+#     echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
+#     echo ''
+#     echo ''
+#     sudo reboot now
+# fi
 
 
 
@@ -205,57 +205,57 @@ sudo chmod +x /home/pi/startScripts/reinitApp.sh
 echo "✅ -> The script that restarts a fresh instance of the app on reboot was created @ /home/pi/startScripts/reinitApp.sh"
 echo ""
 
-# echo "👾 -> Rewriting Rc.local file <- 👾"
-# echo "🚨 -> Switching to root user"
-# whoami
-# sudo -i -u root bash << EOF
-# > /etc/rc.local
-# echo '#!/bin/sh -e' | tee -a /etc/rc.local
-# echo '#' | tee -a /etc/rc.local
-# echo '# rc.local' | tee -a /etc/rc.local
-# echo 'sudo systemctl start ssh' | tee -a /etc/rc.local
-# echo 'sudo bash /home/pi/startScripts/mosquittoServiceStatusCheck.sh' | tee -a /etc/rc.local
-# echo 'sudo bash /home/pi/startScripts/reinitApp.sh' | tee -a /etc/rc.local
-# echo 'exit 0' | tee -a /etc/rc.local
-# EOF
-# echo "✅ -> Rc.local file rewritten"
-# sudo chmod +x /etc/rc.local
+echo "👾 -> Rewriting Rc.local file <- 👾"
+echo "🚨 -> Switching to root user"
+whoami
+sudo -i -u root bash << EOF
+> /etc/rc.local
+echo '#!/bin/sh -e' | tee -a /etc/rc.local
+echo '#' | tee -a /etc/rc.local
+echo '# rc.local' | tee -a /etc/rc.local
+echo 'sudo systemctl start ssh' | tee -a /etc/rc.local
+echo 'sudo bash /home/pi/startScripts/mosquittoServiceStatusCheck.sh' | tee -a /etc/rc.local
+echo 'sudo bash /home/pi/startScripts/reinitApp.sh' | tee -a /etc/rc.local
+echo 'exit 0' | tee -a /etc/rc.local
+EOF
+echo "✅ -> Rc.local file rewritten"
+sudo chmod +x /etc/rc.local
 
-# echo ""
-
-
-# echo "👾 -> Installing node <- 👾"
-
-# # install node 
-# curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
-# sudo apt-get update
-# sudo apt-get install -y nodejs
-# echo "✅ -> Node instaled"
-# echo "🧞‍♂️ -> Node version " $(node --version)
+echo ""
 
 
-# # INSTALL PM2
+echo "👾 -> Installing node <- 👾"
 
-# echo ""
-# echo "👾 -> Installing PM2 <- 👾"
-# echo "🚨 -> Switching to root user"
-# whoami
-# sudo -i -u root bash << EOF
-# npm install -g pm2
-# EOF
-# pm2
-# echo "✅ -> Pm2 installed"
-# echo "🧞‍♂️ -> PM2 version " $(pm2 --version)
-# echo "⬅️ -> Switched back to pi user"
+# install node 
+curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+sudo apt-get update
+sudo apt-get install -y nodejs
+echo "✅ -> Node instaled"
+echo "🧞‍♂️ -> Node version " $(node --version)
 
 
-# echo "✅ -> Running PM2 startup scripts"
-# pm2 startup
-# sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp /home/pi
+# INSTALL PM2
 
-# echo ""
-# echo ""
-# echo ""
+echo ""
+echo "👾 -> Installing PM2 <- 👾"
+echo "🚨 -> Switching to root user"
+whoami
+sudo -i -u root bash << EOF
+npm install -g pm2
+EOF
+pm2
+echo "✅ -> Pm2 installed"
+echo "🧞‍♂️ -> PM2 version " $(pm2 --version)
+echo "⬅️ -> Switched back to pi user"
+
+
+echo "✅ -> Running PM2 startup scripts"
+pm2 startup
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp /home/pi
+
+echo ""
+echo ""
+echo ""
 
 
 
