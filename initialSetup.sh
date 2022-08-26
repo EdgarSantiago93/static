@@ -84,17 +84,6 @@ fi
 # fi
 
 
-# if [ "$REBOOTCHECK" = true ] ; then
-#     echo ''
-#     echo ''
-#     echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
-#     echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
-#     echo '🚨 -> Rebooting, please rerun this script on boot  <- 🚨'
-#     echo ''
-#     echo ''
-#     sudo reboot now
-# fi
-
 
 
 echo ""
@@ -267,7 +256,6 @@ MOSQUITTOSTATUSFINAL=$(systemctl status mosquitto.service | grep Active: | awk '
 
 echo ""
 echo "🏁 -> config.txt modified"
-echo "🏁 -> cmdline.txt modified"
 echo "🏁 -> rc.local rewritten (scripts and ssh service)"
 echo "🏁 -> Packages updated and upgraded"
 echo "🏁 -> Script: $SC1"
