@@ -132,6 +132,10 @@ if [ $MOSQUITTOSTATUS = 'active(running)' ]; then
 fi
 # check status
 
+echo "👾 -> Config folder <- 👾"
+echo "✅ -> Created config folder @ /home/pi/config"
+mkdir -p /home/pi/config
+echo "\n"
 
 echo "👾 -> Creating startup scripts <- 👾"
 
